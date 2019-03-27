@@ -40,4 +40,6 @@ To collect contact motion dataset, you can run Fv_utils.py directly and run:
   rosrun fv_raspi send_command.py
   ```
   it may pop out that directory doesn't exist, you can create an folder named contact_condition_dataset and with inside     folders 0, 1, 2, 3.
+  This dataset contains datapoints of 30 frames of 2X30X30 displacement vectors that represent dx and dy displacement of finger contact area. This dataset would be for now used to train and test a slip prediction framework.
   
+TO BE CONTINUE...
