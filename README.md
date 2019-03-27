@@ -34,5 +34,10 @@ After you launch send_command node, you can input 't', 'r', 'l', 's' in terminal
 you can also check the streaming image and displacement field with rqt/imageview utilities.
 
 
-TO BE CONTINUE...
-
+## Collecting dataset (contact_condition_dataset)
+To collect contact motion dataset, you can run Fv_utils.py directly and run:
+  ```sh
+  rosrun fv_raspi send_command.py
+  ```
+  it may pop out that directory doesn't exist, you can create an folder named contact_condition_dataset and with inside     folders 0, 1, 2, 3.
+  
