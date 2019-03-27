@@ -18,10 +18,12 @@ r : Label this data frame as [Rotational slip]
 l : Lable this data frame as [rolling unstable]
 s : Lable this data frame as [stable]
 
+b : Reset tracking and refill displacement dataframe
+
 CTRL-C to quit
--------------------------------------------------
+====================================================
 """
-key_range = ['t', 'r', 'l', 's']
+key_range = ['t', 'r', 'l', 's', 'b']
 
 def getKey():
     tty.setraw(sys.stdin.fileno())

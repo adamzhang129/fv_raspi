@@ -147,9 +147,13 @@ class Fv:
     
     def command_cb(self, msg):
         key = msg.data
-        dataset_path = '../dataset'
+        dataset_path = '../contact_condition_dataset'
         
-        self.dataset_count = save_data(self.disp_mat, key, dataset_path, self.dataset_count)
+        if key == 'b':
+            print('>>>> reset the tracking and refill the disp_mat matrix')
+            self.tracking_reset()
+        else:
+            self.dataset_count = save_data(self.disp_mat, key, dataset_path, self.dataset_count)
 
     def resize(self, img, ratio):
         self.width = self.width*ratio
@@ -281,10 +285,6 @@ class Fv:
             if time_verbose == 1:
                 print 'total time for tracking: {}'.format(time.time() - start)
             
-            
-            
-            
-            
         self.count += 1
 
     def tracking_reset(self):
@@ -301,11 +301,7 @@ class Fv:
         
         if self.count == 30:
             print '[Data Collection] You can start saving data, the matrix frame is full'
-            
         
-        
-        
-
     def wrench_estimate(self):
         # ======calculate tangential force =========================
         # print self.vfield
@@ -433,30 +429,35 @@ def vec_color_encoding(x, y, encoding='hsv'):
 import pandas as pd
 import os
 
-def save_data(data,command, path, count):
+
+def save_data(data, command, path, count):
     
     # start = time.time()
     df = pd.DataFrame(data, columns=range(0, data.shape[1]))
     # print(df.head(5))
     
-    
     k = command
+    
     if k == 't':
-        filename = os.path.join(path, '0', str(count[0]))
+        filename = os.path.join(path, '0', str(count[0])) + '.csv'
         count[0] += 1
         print('Saving the dataframe with translational slip label as {}'.format(filename))
+        df.to_csv(filename)
     elif k == 'r':
-        filename = os.path.join(path, '1', str(count[1]))
+        filename = os.path.join(path, '1', str(count[1])) + '.csv'
         count[1] += 1
         print('Saving the dataframe with ratational slip label as {}'.format(filename))
+        df.to_csv(filename)
     elif k == 'l':
-        filename = os.path.join(path, '2', str(count[2]))
+        filename = os.path.join(path, '2', str(count[2])) + '.csv'
         count[2] += 1
         print('Saving the dataframe with surface rolling label as {}'.format(filename))
+        df.to_csv(filename)
     elif k == 's':
-        filename = os.path.join(path, '3', str(count[3]))
+        filename = os.path.join(path, '3', str(count[3])) + '.csv'
         count[3] += 1
         print('Saving the dataframe with stable label as {}'.format(filename))
+        df.to_csv(filename)
     
     # print 'time elapsed: {}'.format(time.time() - start)
     return count
@@ -477,7 +478,6 @@ if __name__ == "__main__":
     
         rate = rospy.Rate(30)
         
-        dataset_count = [0, 0, 0, 0]
 
         while True:
             # if fv.count >= 2:
